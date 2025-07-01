@@ -26,6 +26,14 @@ export default function ActivityDetailPage() {
   const [activity, setActivity] = useState<Activity | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  const pay = async () => {
+    const res = await fetch('/api/stripe/checkout', { method: 'POST' });
+    const data = await res.json();
+    if (data.url) {
+      window.location.href = data.url;
+    }
+  };
+
   useEffect(() => {
     if (!id) return;
 
@@ -60,6 +68,14 @@ export default function ActivityDetailPage() {
         <StaticPolylineCanvas encodedPolyline={activity.map.summary_polyline} />
 
         <CustomStravaTemplate activity={activity} />
+        <div className="mt-6">
+          <button
+            onClick={pay}
+            className="px-6 py-3 rounded bg-purple-600 text-white"
+          >
+            Pagar con Stripe
+          </button>
+        </div>
         </div>
       )}
     </div>
