@@ -30,25 +30,33 @@ export default function ActivitiesPage() {
   }, []);
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Tus actividades recientes</h1>
+    <main className="p-6 max-w-4xl mx-auto">
+      <h1 className="text-3xl font-bold mb-6">Tus actividades</h1>
 
-      {error && <p className="text-red-600">{error}</p>}
+      {error && <p className="mb-4 text-red-600">{error}</p>}
 
-      <ul className="space-y-4">
+      <ul className="grid gap-4 sm:grid-cols-2">
         {activities.map((activity) => (
-          <Link
-            key={activity.id}
-            href={`/activities/${activity.id}`}
-            className="block border rounded p-4 shadow hover:bg-gray-50"
-          >
-            <h2 className="text-lg font-semibold">{activity.name}</h2>
-            <p>Tipo: {activity.type}</p>
-            <p>Distancia: {(activity.distance / 1000).toFixed(2)} km</p>
-            <p>Duración: {(activity.moving_time / 60).toFixed(0)} minutos</p>
-          </Link>
+          <li key={activity.id}>
+            <Link
+              href={`/activities/${activity.id}`}
+              className="block border border-gray-200 rounded-lg p-4 bg-white shadow hover:border-orange-500 hover:shadow-md transition"
+            >
+              <div className="flex items-baseline justify-between">
+                <h2 className="text-lg font-semibold">{activity.name}</h2>
+                <span className="text-sm text-gray-500">
+                  {new Date(activity.start_date).toLocaleDateString()}
+                </span>
+              </div>
+              <div className="mt-2 text-sm text-gray-700 space-y-1">
+                <p>Tipo: {activity.type}</p>
+                <p>Distancia: {(activity.distance / 1000).toFixed(2)} km</p>
+                <p>Duración: {(activity.moving_time / 60).toFixed(0)} min</p>
+              </div>
+            </Link>
+          </li>
         ))}
       </ul>
-    </div>
+    </main>
   );
 }
