@@ -28,3 +28,24 @@ export async function fetchActivity(id: string, token: string) {
   if (!res.ok) throw new Error('Failed to load activity');
   return res.json();
 }
+
+export async function fetchAthlete(token: string) {
+  const res = await fetch('https://www.strava.com/api/v3/athlete', {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error('Failed to load athlete');
+  return res.json();
+}
+
+export async function updateAthlete(token: string, body: any) {
+  const res = await fetch('https://www.strava.com/api/v3/athlete', {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error('Failed to update athlete');
+  return res.json();
+}

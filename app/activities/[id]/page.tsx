@@ -45,21 +45,45 @@ export default function ActivityDetailPage() {
   if (!activity) return <p className="p-6">Cargando actividad...</p>;
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">{activity.name}</h1>
-      <p>Tipo: {activity.type}</p>
-      <p>Distancia: {(activity.distance / 1000).toFixed(2)} km</p>
-      <p>Duración: {(activity.moving_time / 60).toFixed(0)} min</p>
-      <p>Elevación: {activity.total_elevation_gain} m</p>
-      <p>Fecha: {new Date(activity.start_date).toLocaleString()}</p>
+    <div className="p-6 max-w-4xl mx-auto">
+      <h1 className="text-2xl font-bold mb-2">{activity.name}</h1>
+      <p className="text-gray-500 mb-4">
+        {new Date(activity.start_date).toLocaleString()}
+      </p>
 
       {activity.map?.summary_polyline && (
+        <div className="mb-6">
+          <StravaMap encodedPolyline={activity.map.summary_polyline} />
+        </div>
+      )}
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white rounded shadow text-center py-4">
         <div>
-        <StravaMap encodedPolyline={activity.map.summary_polyline} />
+          <div className="text-xl font-bold">
+            {(activity.distance / 1000).toFixed(2)} km
+          </div>
+          <div className="text-sm text-gray-500">Distancia</div>
+        </div>
+        <div>
+          <div className="text-xl font-bold">
+            {(activity.moving_time / 60).toFixed(0)} min
+          </div>
+          <div className="text-sm text-gray-500">Tiempo</div>
+        </div>
+        <div>
+          <div className="text-xl font-bold">{activity.total_elevation_gain} m</div>
+          <div className="text-sm text-gray-500">Elevación</div>
+        </div>
+        <div>
+          <div className="text-xl font-bold">{activity.type}</div>
+          <div className="text-sm text-gray-500">Tipo</div>
+        </div>
+      </div>
 
-        <StaticPolylineCanvas encodedPolyline={activity.map.summary_polyline} />
-
-        <CustomStravaTemplate activity={activity} />
+      {activity.map?.summary_polyline && (
+        <div className="mt-8 space-y-8">
+          <StaticPolylineCanvas encodedPolyline={activity.map.summary_polyline} />
+          <CustomStravaTemplate activity={activity} />
         </div>
       )}
     </div>
