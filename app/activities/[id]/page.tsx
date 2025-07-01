@@ -88,7 +88,7 @@ export default function ActivityDetailPage() {
         </div>
       </div>
 
-        <CustomStravaTemplate activity={activity} />
+        {/* <CustomStravaTemplate activity={activity} /> */}
         <div className="mt-6">
           <button
             onClick={pay}
@@ -98,13 +98,13 @@ export default function ActivityDetailPage() {
           </button>
         </div>
 
-      {activity.map?.summary_polyline && (
+      {/* {activity.map?.summary_polyline && (
         <div className="mt-8 space-y-8">
           <StaticPolylineCanvas encodedPolyline={activity.map.summary_polyline} />
           <CustomStravaTemplate activity={activity} />
 
         </div>
-      )}
+      )} */}
     </div>
   );
 }

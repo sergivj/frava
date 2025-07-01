@@ -32,7 +32,12 @@ export default function Navbar() {
 
   return (
     <nav className="flex items-center justify-between px-6 py-4 bg-orange-500 text-white">
-      <div className="text-lg font-bold">Frava</div>
+      <div className="flex items-end space-x-[40%]">
+      <div className="text-4xl font-bold">Frava</div>
+      {athlete && (
+        <div className="text-lg font-bold cursor-pointer" onClick={ () => window.location.href="/activities"}>Actividades</div>
+      )}
+      </div>
       {athlete ? (
         <div className="relative">
           <button

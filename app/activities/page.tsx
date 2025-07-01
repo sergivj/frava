@@ -29,12 +29,21 @@ export default function ActivitiesPage() {
       .catch(() => setError("Error al conectar con la API"));
   }, []);
 
+
   return (
     <main className="p-6 max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">Tus actividades</h1>
 
       {error && <p className="mb-4 text-red-600">{error}</p>}
+      {activities.length === 0 && error && (
+        <p className="text-gray-500">No tienes actividades registradas.</p>
+      )}
 
+      {activities.length === 0 && (
+        <p className="mb-4 text-gray-600">
+          Cargando actividades...
+        </p>
+      )}
       <ul className="grid gap-4 sm:grid-cols-2">
         {activities.map((activity) => (
           <li key={activity.id}>
