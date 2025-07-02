@@ -27,7 +27,7 @@ export default function ActivityDetailPage() {
   const [error, setError] = useState<string | null>(null);
 
   const pay = async () => {
-    const res = await fetch('/api/stripe/checkout', { method: 'POST' });
+    const res = await fetch('/api/stripe/checkout', { method: 'POST', body: JSON.stringify({ activityId: id }) });
     const data = await res.json();
     if (data.url) {
       window.location.href = data.url;
