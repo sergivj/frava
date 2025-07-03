@@ -1,6 +1,4 @@
-// /app/api/strava/callback/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
 
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get("code");
@@ -9,8 +7,8 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Missing code" }, { status: 400 });
   }
 
-  const client_id = "165786";
-  const client_secret = process.env.STRAVA_CLIENT_SECRET; // Asegúrate de tenerlo en .env
+  const client_id = process.env.NEXT_PUBLIC_STRAVA_CLIENT_ID;
+  const client_secret = process.env.STRAVA_CLIENT_SECRET;
 
   try {
     const res = await fetch("https://www.strava.com/oauth/token", {
@@ -25,16 +23,21 @@ export async function GET(req: NextRequest) {
     });
 
     const data = await res.json();
-
     if (!res.ok) {
       console.error("Error al obtener el token:", data);
       return NextResponse.json(data, { status: 400 });
     }
 
-    // Puedes guardar el token en DB, cookie, sesión, etc.
-    return NextResponse.redirect(new URL("/activities", req.url), {
+    // Guardar token en cookie segura
+    const isLocal = req.headers.get("host")?.startsWith("192.168.") || req.headers.get("host")?.includes("localhost");
+
+    const cookieHeader = `strava_token=${data.access_token}; Path=/; HttpOnly; ${
+      isLocal ? "" : "Secure;"
+    } SameSite=Lax; Max-Age=21600`;
+
+    return NextResponse.redirect(new URL("http://192.168.0.47:3000/activities", req.url), {
       headers: {
-        "Set-Cookie": `strava_token=${data.access_token}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=21600`,
+        "Set-Cookie": cookieHeader,
       },
     });
   } catch (error) {

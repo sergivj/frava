@@ -12,7 +12,7 @@ export async function POST(request: Request) {
 
     const session = await createCheckoutSession(activityId);
     return NextResponse.json({ url: session.url });
-  } catch (err: any) {
+  } catch (err) {
     console.error("Checkout Error:", err);
     return NextResponse.json({ error: 'Failed to create session' }, { status: 500 });
   }

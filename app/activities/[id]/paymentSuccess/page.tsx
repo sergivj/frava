@@ -16,13 +16,40 @@ interface Activity {
   map?: {
     summary_polyline?: string;
   };
+  athlete: {
+    id: number;
+    firstname: string;
+    lastname: string;
+  };
+}
+
+interface StripeData {
+  id: string;
+  status: string;
+  amount_total: number;
+  customer_details: {
+    name?: string;
+    email?: string;
+  };
+  payment_intent: string;
+  collected_information?: {
+    shipping_details?: {
+      address?: {
+        line1?: string;
+        line2?: string;
+        city?: string;
+        postal_code?: string;
+        state?: string;
+      };
+    };
+  };
 }
 
 export default function PaymentSuccessPage() {
   const { id } = useParams();
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session_id');
-  const [stripeData, setStripeData] = useState<any>(null);
+  const [stripeData, setStripeData] = useState<StripeData | null>(null); 
   const [activity, setActivity] = useState<Activity | null>(null);
   const [pushedToStrapi, setPushedToStrapi] = useState(false);
 
@@ -56,7 +83,7 @@ export default function PaymentSuccessPage() {
       const imageForm = new FormData();
       imageForm.append('files', file);
 
-      const uploadRes = await fetch('http://localhost:1337/api/upload', {
+      const uploadRes = await fetch('http://192.168.0.47:1337/api/upload', {
         method: 'POST',
         body: imageForm,
       });
@@ -84,7 +111,7 @@ export default function PaymentSuccessPage() {
         },
       };
 
-      await fetch('http://localhost:1337/api/pedidos', {
+      await fetch('http://192.168.0.47:1337/api/pedidos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(pedido),
@@ -134,7 +161,7 @@ export default function PaymentSuccessPage() {
         )}
 
         {/* Vista previa de la actividad */}
-        {activity && stripeData.status && (
+        {activity && stripeData?.status && (
           <div
             id="template"
             className="bg-white rounded-xl shadow-md overflow-hidden p-4"

@@ -1,14 +1,23 @@
+interface BodyInterface {
+  name?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+}
+
 export async function exchangeToken(code: string) {
   const params = new URLSearchParams();
   params.append('client_id', process.env.NEXT_PUBLIC_STRAVA_CLIENT_ID ?? '');
   params.append('client_secret', process.env.STRAVA_CLIENT_SECRET ?? '');
   params.append('code', code);
   params.append('grant_type', 'authorization_code');
+
   const res = await fetch('https://www.strava.com/oauth/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: params,
   });
+
   if (!res.ok) throw new Error('Failed to exchange token');
   return res.json();
 }
@@ -37,7 +46,7 @@ export async function fetchAthlete(token: string) {
   return res.json();
 }
 
-export async function updateAthlete(token: string, body: any) {
+export async function updateAthlete(token: string, body: BodyInterface) {
   const res = await fetch('https://www.strava.com/api/v3/athlete', {
     method: 'PUT',
     headers: {

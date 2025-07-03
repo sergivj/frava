@@ -10,6 +10,6 @@ export async function GET(request: NextRequest) {
     const data = await exchangeToken(code);
     return NextResponse.json({ access_token: data.access_token });
   } catch (err) {
-    return NextResponse.json({ error: 'Failed to authenticate' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to authenticate' + err }, { status: 500 });
   }
 }

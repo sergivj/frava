@@ -1,10 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 
-interface Athlete {
-  weight?: number;
-}
-
 export default function Profile() {
   const [weight, setWeight] = useState<string>("");
   const [message, setMessage] = useState<string>("");

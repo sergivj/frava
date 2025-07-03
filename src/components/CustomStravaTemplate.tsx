@@ -63,8 +63,10 @@ export default function CustomStravaTemplate({
     ctx.strokeStyle = polylineColor;
     ctx.lineWidth = 3;
     ctx.beginPath();
-
+    
+    
     points.forEach(([lat, lng], index) => {
+      // @typescript-eslint/no-unused-expressions
       const x = (lng - minLng) * scaleX + padding;
       const y = height - ((lat - minLat) * scaleY + padding);
       index === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);

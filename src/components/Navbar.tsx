@@ -17,7 +17,10 @@ export default function Navbar() {
     fetch("/api/strava/athlete")
       .then((res) => res.ok ? res.json() : null)
       .then((data) => {
-        if (data?.athlete) setAthlete(data.athlete);
+        if (data?.athlete) {
+          setAthlete(data.athlete)
+          localStorage.setItem("athlete", JSON.stringify(data.athlete));
+        };
       })
       .catch(() => {});
   }, []);
@@ -31,9 +34,9 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="flex items-center justify-between px-6 py-4 bg-orange-500 text-white">
-      <div className="flex items-end space-x-[40%]">
-      <div className="text-4xl font-bold">Frava</div>
+    <nav className="flex items-center justify-between px-6 py-4 bg-black text-white">
+      <div className="flex items-end md:space-x-[40%] space-x-[10%]">
+      <div className="text-4xl font-bold" onClick={() => window.location.href='/'}>Frava</div>
       {athlete && (
         <div className="text-lg font-bold cursor-pointer" onClick={ () => window.location.href="/activities"}>Actividades</div>
       )}
@@ -52,7 +55,7 @@ export default function Navbar() {
             <span>{athlete.firstname} {athlete.lastname}</span>
           </button>
           {open && (
-            <ul className="absolute right-0 mt-2 w-40 bg-white text-black rounded shadow">
+            <ul className="absolute right-0 mt-2 w-40 bg-white text-black rounded shadow z-30">
               <li>
                 <a
                   href="/profile"

@@ -1,7 +1,7 @@
 export async function createCheckoutSession(activityId: string) {
   const params = new URLSearchParams({
-    success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/activities/${activityId}/paymentSuccess?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/activities/${activityId}/paymentSuccess?session_id={CHECKOUT_SESSION_ID}`,
+    success_url: `http://192.168.0.47:3000/activities/${activityId}/paymentSuccess?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `http://192.168.0.47:3000/activities/${activityId}/paymentSuccess?session_id={CHECKOUT_SESSION_ID}`,
     mode: 'payment',
     'line_items[0][price]': process.env.NEXT_PUBLIC_STRIPE_PRICE_ID ?? '',
     'line_items[0][quantity]': '1',

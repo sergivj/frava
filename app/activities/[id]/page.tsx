@@ -3,8 +3,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import dynamic from "next/dynamic";
-import StaticPolylineCanvas from "@/src/components/StaticPolylineCanvas";
-import CustomStravaTemplate from "@/src/components/CustomStravaTemplate";
 
 interface Activity {
   id: number;
