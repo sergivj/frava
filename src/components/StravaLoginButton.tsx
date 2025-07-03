@@ -2,7 +2,7 @@
 
 export default function StravaLoginButton() {
   const clientId = process.env.NEXT_PUBLIC_STRAVA_CLIENT_ID;
-  const redirectUri = "http://192.168.0.47:3000/api/strava/callback";
+  const redirectUri = "https://frava.vercel.app/api/strava/callback";
   const scope = "read,activity:read_all";
   const responseType = "code";
   const approvalPrompt = "force";

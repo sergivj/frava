@@ -35,7 +35,7 @@ export async function GET(req: NextRequest) {
       isLocal ? "" : "Secure;"
     } SameSite=Lax; Max-Age=21600`;
 
-    return NextResponse.redirect(new URL("http://192.168.0.47:3000/activities", req.url), {
+    return NextResponse.redirect(new URL("https://frava.vercel.app/activities", req.url), {
       headers: {
         "Set-Cookie": cookieHeader,
       },
