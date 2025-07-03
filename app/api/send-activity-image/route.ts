@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
 
   try {
 
-    await fetch('http://192.168.0.47:1337/api/pedidos', {
+    await fetch('https://frava-cms.onrender.com/api/pedidos', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

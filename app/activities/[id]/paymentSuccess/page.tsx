@@ -83,7 +83,7 @@ export default function PaymentSuccessPage() {
       const imageForm = new FormData();
       imageForm.append('files', file);
 
-      const uploadRes = await fetch('http://192.168.0.47:1337/api/upload', {
+      const uploadRes = await fetch('https://frava-cms.onrender.com/api/upload', {
         method: 'POST',
         body: imageForm,
       });
@@ -111,7 +111,7 @@ export default function PaymentSuccessPage() {
         },
       };
 
-      await fetch('http://192.168.0.47:1337/api/pedidos', {
+      await fetch('https://frava-cms.onrender.com/api/pedidos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(pedido),
